@@ -16,19 +16,19 @@ def speak():
     # Rate: - matlab slow, + matlab fast
     # Pitch: + matlab sweet/high, - matlab deep/low
         if mood == 'caring':
-        rate, pitch = '+0%', '+2Hz'   # Pehle -15% tha, ab fast lagega
+        rate, pitch = '+5%', '+2Hz'   # Pehle -15% tha, ab fast lagega
     elif mood == 'excited':
-        rate, pitch = '+15%', '+5Hz'  # Thoda aur energetic
+        rate, pitch = '+20%', '+5Hz'  # Thoda aur energetic
     elif mood == 'sad':
-        rate, pitch = '-5%', '-3Hz'  # Zyada slow nahi kiya
+        rate, pitch = '+3%', '-3Hz'  # Zyada slow nahi kiya
     elif mood == 'motivational':
-        rate, pitch = '+8%', '+3Hz'
+        rate, pitch = '+12%', '+3Hz'
     elif mood == 'professional':
-        rate, pitch = '+0%', '+0Hz'
+        rate, pitch = '+5%', '+0Hz'
     elif mood == 'apologetic':
-        rate, pitch = '-3%', '-1Hz'
+        rate, pitch = '+3%', '-1Hz'
     else:  # Default 'friendly'
-        rate, pitch = '+0%', '+1Hz'   # Normal speed
+        rate, pitch = '+4%', '+1Hz'   # Normal speed
 
 
     output_file = "output.mp3"
