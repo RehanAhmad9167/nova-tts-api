@@ -12,39 +12,40 @@ def speak():
     mood = request.args.get('mood', 'friendly').lower()
 
     # --- VOICE SPECIFIC LOGIC ---
-    # Madhur (Male) ko young banane ke liye high pitch boost chahiye
     if 'Madhur' in voice:
-        pitch_base = 12  # Young male sound
-        rate_base = 2    # Slightly faster to avoid "old" tone
-    # Swara (Female) ke liye normal settings
+        pitch_base = 12
+        rate_base = 2
     else:
-        pitch_base = 2   # Natural female sound
-        rate_base = 0    # Normal speed
+        pitch_base = 2
+        rate_base = 0
 
-    # --- MOOD LOGIC (Tuning) ---
+    # --- MOOD LOGIC (Using your exact speed/rate values) ---
     if mood == 'caring':
-        rate, pitch = f'{rate_base+6}%', f'+{pitch_base}Hz'
+        r, p = rate_base + 6, pitch_base
     elif mood == 'excited':
-        rate, pitch = f'{rate_base+14}%', f'+{pitch_base+5}Hz'
+        r, p = rate_base + 14, pitch_base + 5
     elif mood == 'sad':
-        rate, pitch = f'{rate_base+3}%', f'+{pitch_base-5}Hz'
+        r, p = rate_base + 3, pitch_base - 5
     elif mood == 'motivational':
-        rate, pitch = f'{rate_base+11}%', f'+{pitch_base+3}Hz'
-    elif mood == 'professional':
-        rate, pitch = f'{rate_base}%', f'+{pitch_base}Hz'
+        r, p = rate_base + 11, pitch_base + 3
     elif mood == 'apologetic':
-        rate, pitch = f'{rate_base-5}%', f'+{pitch_base-1}Hz'
-    else:  # Default 'friendly'
-        rate, pitch = f'{rate_base}%', f'+{pitch_base}Hz'
+        r, p = rate_base - 5, pitch_base - 1
+    else:  # friendly / professional
+        r, p = rate_base, pitch_base
+
+    # --- STRICT SIGN CONTROL (+/- Logic) ---
+    # Isse '+2%' ya '-5%' jaisa format fix ho jayega
+    rate_str = f"{r:+}%"
+    pitch_str = f"{p:+}Hz"
 
     output_file = "output.mp3"
     
     async def generate():
-        communicate = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch)
+        # Using formatted rate and pitch strings
+        communicate = edge_tts.Communicate(text, voice, rate=rate_str, pitch=pitch_str)
         await asyncio.wait_for(communicate.save(output_file), timeout=15)
 
     try:
-        # Puraani file delete karna taaki fresh audio bane
         if os.path.exists(output_file):
             os.remove(output_file)
             
@@ -56,4 +57,4 @@ def speak():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-                         
+        
