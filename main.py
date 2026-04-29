@@ -19,29 +19,31 @@ def speak():
         pitch_base = 2
         rate_base = 0
 
-    # --- MOOD LOGIC (Using your exact speed/rate values) ---
+    # --- MOOD LOGIC (Tumhari exact speed settings) ---
     if mood == 'caring':
-        r, p = rate_base + 6, pitch_base
+        r, p = rate_base + 9, pitch_base
     elif mood == 'excited':
         r, p = rate_base + 14, pitch_base + 5
     elif mood == 'sad':
-        r, p = rate_base + 3, pitch_base - 5
+        r, p = rate_base + 7, pitch_base - 5
     elif mood == 'motivational':
-        r, p = rate_base + 11, pitch_base + 3
+        r, p = rate_base + 12, pitch_base + 3
     elif mood == 'apologetic':
-        r, p = rate_base - 5, pitch_base - 1
-    else:  # friendly / professional
-        r, p = rate_base, pitch_base
+        r, p = rate_base + 7, pitch_base - 1
+    elif mood == 'question':
+        r, p = rate_base + 10, pitch_base + 4  # Sawal ke liye high pitch
+    elif mood == 'command':
+        r, p = rate_base + 12, pitch_base + 1  # Direct aur fast
+    else:  # friendly, professional, and others
+        r, p = rate_base + 10, pitch_base
 
-    # --- STRICT SIGN CONTROL (+/- Logic) ---
-    # Isse '+2%' ya '-5%' jaisa format fix ho jayega
+    # Sign formatting (+/- logic) for edge-tts safety
     rate_str = f"{r:+}%"
     pitch_str = f"{p:+}Hz"
 
     output_file = "output.mp3"
     
     async def generate():
-        # Using formatted rate and pitch strings
         communicate = edge_tts.Communicate(text, voice, rate=rate_str, pitch=pitch_str)
         await asyncio.wait_for(communicate.save(output_file), timeout=15)
 
@@ -57,4 +59,4 @@ def speak():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-        
+    
