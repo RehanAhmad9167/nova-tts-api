@@ -21,21 +21,21 @@ def speak():
 
     # --- MOOD LOGIC (Tumhari exact speed settings) ---
     if mood == 'caring':
-        r, p = rate_base + 9, pitch_base
+        r, p = rate_base + 12, pitch_base
     elif mood == 'excited':
-        r, p = rate_base + 14, pitch_base + 5
+        r, p = rate_base + 15, pitch_base + 5
     elif mood == 'sad':
-        r, p = rate_base + 7, pitch_base - 5
+        r, p = rate_base + 11, pitch_base - 5
     elif mood == 'motivational':
-        r, p = rate_base + 12, pitch_base + 3
+        r, p = rate_base + 13, pitch_base + 3
     elif mood == 'apologetic':
-        r, p = rate_base + 7, pitch_base - 1
+        r, p = rate_base + 11, pitch_base - 1
     elif mood == 'question':
-        r, p = rate_base + 10, pitch_base + 4  # Sawal ke liye high pitch
+        r, p = rate_base + 12, pitch_base + 4  # Sawal ke liye high pitch
     elif mood == 'command':
-        r, p = rate_base + 12, pitch_base + 1  # Direct aur fast
+        r, p = rate_base + 14, pitch_base + 1  # Direct aur fast
     else:  # friendly, professional, and others
-        r, p = rate_base + 10, pitch_base
+        r, p = rate_base + 12, pitch_base
 
     # Sign formatting (+/- logic) for edge-tts safety
     rate_str = f"{r:+}%"
